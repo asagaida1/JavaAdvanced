@@ -1,4 +1,5 @@
 /.idea
+target/classes/META-INF/
 
 # Compiled class file
 *.class
