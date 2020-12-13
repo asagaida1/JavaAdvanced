@@ -2,12 +2,13 @@ package lambda;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class StudentInfo {
 
-    void testStudents(List<Student> list, StudentChecks sc) {
+    void testStudents(List<Student> list, Predicate predicate) {
         for (Student s:list) {
-            if(sc.check(s)){
+            if(predicate.test(s)){
                 System.out.println(s);
             }
         }
@@ -62,14 +63,21 @@ class Test {
 //                return s.age < 30;
 //            }
 //        });
-        info.testStudents(students, (Student s) -> s.avgGrade > 8);
+//        info.testStudents(students, (Student s) -> s.avgGrade > 8);
 
         System.out.println("-----------------");
-        info.testStudents(students, sc -> sc.age >= 30);
+//        info.testStudents(students, sc -> sc.age >= 30);
 
         System.out.println("-----------------");
-        info.testStudents(students, (Student s)-> s.avgGrade>5&&s.age>20&&s.sex=='f');
+//        info.testStudents(students, (Student s)-> s.avgGrade>5&&s.age>20&&s.sex=='f');
 //        s.age > age && s.avgGrade < grade && s.sex == sex
+
+        System.out.println("-----------------");
+        Predicate<Student> p1 = student -> student.age>20;
+        Predicate<Student> p2 = student -> student.avgGrade>9;
+        Predicate<Student> p3 = student -> student.sex=='f';
+
+        info.testStudents(students, p1.and(p2).or(p3));
 
 
 //        info.printStudentOverGrade(students, 8);
@@ -80,9 +88,9 @@ class Test {
     }
 }
 
-interface StudentChecks {
-    boolean check(Student s);
-}
+//interface StudentChecks {
+//    boolean check(Student s);
+//}
 
 //class CheckOverGrade implements StudentChecks {
 //
